@@ -1,0 +1,70 @@
+{"users": [{"name": "Leela", "dob":"1983"},
+{"name": "Pradeep", "dob":"1983"}]}
+
+//login.component.html
+<div>
+  <input type="button" value="Get Users" (click)="getUsers()">
+</div>
+<div>
+  <p>Users Data:</p>
+  <ul>
+    <li *ngFor="let user of users">
+      UserName : {{ user.name }}, DOB : {{user.dob}}
+    </li>
+  </ul>
+</div>
+
+//login.component.ts
+import { Component, OnInit } from '@angular/core';
+import { User } from './user';
+import {UserService} from '../services/user.service';
+
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  users:User[]=[];
+  constructor(private userService: UserService) { }
+
+  ngOnInit() {
+  }
+
+  getUsers() {
+    console.log('getUsers');
+
+    this.userService.test();
+    this.userService.getUsers().subscribe(
+      (res: User[]) => {
+        console.log(res);
+        this.users.push(res.users[0]);
+        this.users.push(res.users[1]);
+        console.log(this.users);
+      },
+      (err) => {console.log(err)},
+      () => {
+        console.log('getUsers completed');
+      }
+
+    );
+  }
+
+}
+
+
+//user.ts
+export class User {
+name?:string;
+dob?:string;
+User(name:string, dob:string) {
+  this.name=name;
+  this.dob=dob;
+}
+}
+
+
+//
+

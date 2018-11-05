@@ -1,0 +1,11 @@
+<div>
+  <input type="button" value="Get Users" (click)="getUsers()">
+</div>
+<div>
+  <p>Users Data:</p>
+  <ul>
+    <li *ngFor="let user of users">
+      UserName : {{ user.name }}, DOB : {{user.dob}}
+    </li>
+  </ul>
+</div>
